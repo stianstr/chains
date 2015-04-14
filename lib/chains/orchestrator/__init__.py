@@ -309,6 +309,10 @@ class Orchestrator(amqp.AmqpDaemon):
             if not data.get('online'):     data['online'] = False
             if not data.get('heartbeat'):  data['heartbeat'] = 0
 
+        if not data['main'].has_key('manager'):
+            log.error('Config for device %s is missing "manager" under "[main]" and will be ignored' % data['main']['id'])
+            return
+
         self.data['device'][ data['main']['id'] ] = data
 
     def loadConfigFile(self, path):
